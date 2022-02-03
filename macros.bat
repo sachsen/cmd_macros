@@ -1,18 +1,12 @@
 @echo off
-
 rem ---------Macro Backup Field ƒ}ƒNƒƒoƒbƒNƒAƒbƒvˆ—-----------------------
 powershell -executionpolicy RemoteSigned -File %USERPROFILE%\cmd_macros\macros_sub.ps1
-
 rem cat %USERPROFILE%\cmd_macros\log.txt
 
-
 rem ---------Macro Definition Field ƒ}ƒNƒ’è‹`ƒGƒŠƒA--------------------------------------
-if exist %USERPROFILE%\cmd_macros\macrolist.bat (
-call macrolist.bat
-)
-if exist %USERPROFILE%\cmd_macros\secretmacros.bat (
-call secretmacros.bat
-)
+if exist "%USERPROFILE%\cmd_macros\macrolist.bat" call "%USERPROFILE%\cmd_macros\macrolist.bat"
+if exist "%USERPROFILE%\cmd_macros\secretmacros.bat" call "%USERPROFILE%\cmd_macros\secretmacros.bat"
+
 rem ---------Color Definition Field F’è‹`ƒGƒŠƒA--------------------------------------
 rem F•t‚¯•”‚ÌƒvƒƒOƒ‰ƒ€‚ÍAhttp://it-junkbox.cocolog-nifty.com/blog/2011/08/ms-dos-06fd.html ‚æ‚è”qØ
 set •=[30m
@@ -55,7 +49,6 @@ echo;
 
 rem ---------Macro Display Field ƒ}ƒNƒˆê——•\¦ƒGƒŠƒA--------------------------------------
 echo %green_bg%%white%Macros are%blue_bg%
-
 doskey /macros
 echo %default%
 
