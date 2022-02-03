@@ -11,7 +11,7 @@ It can backup macros automatically to OneDrive　when you open cmd.exe.
 
 # How to use　使用方法
 
-## Itnitial Settings 初期設定
+## Initial Settings 初期設定
 move cmd_macros folder to C:\Users\usename\
 
 cmd_macrosフォルダをC:\Users\ユーザー名\直下に置きます。
