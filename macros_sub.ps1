@@ -24,11 +24,17 @@ function checkExist([string]$file1,[string]$folder1){
     $exlocal=Test-Path $localpath
     $exremote=Test-Path $remotepath
     if ($exlocal -and $exremote) {
+        $isDir=(Get-Item $localpath) -is [System.IO.DirectoryInfo]
+        if ($isDir){ return 4;}
         return 0;
     }elseif($exlocal -and (-not $exremote)){
         #remoteÇ™ë∂ç›ÇµÇ»Ç¢ not exist remote file
+        $isDir=(Get-Item $localpath) -is [System.IO.DirectoryInfo]
+        if ($isDir){ return 4;}
         return 1;
     }elseif((-not $exlocal) -and $exremote){
+        $isDir=(Get-Item $remotepath) -is [System.IO.DirectoryInfo]
+        if ($isDir){ return 4;}
         return 2;
     }elseif((-not $exlocal) -and (-not $exremote)){
         #óºï˚ë∂ç›ÇµÇ»Ç¢ neither exist
@@ -76,27 +82,40 @@ function execFiles([string]$file1,[int]$num,[string]$folder1){
             Write-Output $file1": error!! not exist!";
             return $False;
         }
+        4 {
+            #directory
+            return $True;
+        }
     }
 }
 
-
-$logpath=Join-Path $env:USERPROFILE "cmd_macros\log.txt";
+$lpath=Join-Path $env:USERPROFILE "cmd_macros"
+$logpath=Join-Path $lpath "log.txt";
 Start-Transcript $logpath;
-$jsonpath=Join-Path $env:USERPROFILE "cmd_macros\config.json"
+$jsonpath=Join-Path $lpath "config.json"
 $jsonContent = (Get-Content $jsonpath | ConvertFrom-Json)
 if(!$jsonContent.Backup){
     Write-Output "Backup setting : Disable"
     exit 0;
 }
-$configpath=Join-Path  $env:USERPROFILE "cmd_macros\config.json"
-$batname="macros.bat";
-$psname="macros_sub.ps1";
-$existbat=checkExist $batname $jsonContent.OneDrivePath;
-$existps=checkExist $psname $jsonContent.OneDrivePath;
-$result1=execFiles $batname $existbat $jsonContent.OneDrivePath;
-$result2=execFiles $psname $existps $jsonContent.OneDrivePath;
+$rpath=Join-Path $env:USERPROFILE $jsonContent.OneDriveFolderName;
+$rpath=Join-Path $rpath "cmd_macros";
+New-Item $rpath -ItemType Directory -Force;
+$itemListLocal = Get-ChildItem $lpath -Name -file;
+$itemListRemote = Get-ChildItem $rpath -Name -file;
+$itemList=$itemListLocal+$itemListRemote;
+#èdï°çÌèú
+$itemList=$itemList | Sort-Object | Get-Unique;
+$count=0
+foreach($item in $itemList){
+    $isExist=checkExist $item $jsonContent.OneDriveFolderName;
+    $result=execFiles $item $isExist $jsonContent.OneDriveFolderName;
+    if(!$result){
+        $count=$count+1
+    }
+};
 Stop-Transcript
-if($result1 -and $result2){
+if($count -eq 0 ){
     Write-Output "updadate successed!"
     exit 0;
 }else{
