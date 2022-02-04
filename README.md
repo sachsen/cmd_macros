@@ -7,11 +7,9 @@ It can backup macros automatically to OneDrive　when you open cmd.exe.
 
 起動時にOneDriveにマクロをバックアップする機能があります。
 
-複数台のPCでマクロを共有したいがため作りました。
-
 # How to use　使用方法
 
-## Initial Settings 初期設定
+## Itnitial Settings 初期設定
 move cmd_macros folder to C:\Users\usename\
 
 cmd_macrosフォルダをC:\Users\ユーザー名\直下に置きます。

@@ -54,6 +54,7 @@ function execFiles([string]$file1,[int]$num,[string]$folder1){
                     Write-Output $file1": local file updated!";
                     Write-Host $file1": local file updated!";
                     Copy-Item -Path $remotepath -Destination $localpath -Force;
+
                 }
                 -1{
                     Write-Output $file1": remote file updated!";
@@ -106,6 +107,8 @@ $itemListRemote = Get-ChildItem $rpath -Name -file;
 $itemList=$itemListLocal+$itemListRemote;
 #èdï°çÌèú
 $itemList=$itemList | Sort-Object | Get-Unique;
+#ignore files
+$itemList=compare  $itemList $jsonContent.ignorelist  |  %  inputobject  |  sort
 $count=0
 foreach($item in $itemList){
     $isExist=checkExist $item $jsonContent.OneDriveFolderName;
