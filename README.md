@@ -1,9 +1,9 @@
 # What's this? これは何？
-This app for setting Command Prompt Macros for my own sake, so don't expect too much.
+This app for setting Command Prompt Macros for personal use, so don't expect too much.
 
 Windowsのコマンドプロンプトのマクロを設定するプログラムです。自分用に作ったものなので動作等期待しないでください。
 
-It can backup macros automatically to OneDrive　when you open cmd.exe.
+It can backup macros automatically to OneDrive when you open cmd.exe.
 
 起動時にOneDriveにマクロをバックアップする機能があります。
 
