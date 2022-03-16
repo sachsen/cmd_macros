@@ -1,4 +1,5 @@
 @ECHO OFF
+chcp 65001
 echo Macros Backup Automatically to OneDrive?
 choice
 
