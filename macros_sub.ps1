@@ -28,7 +28,7 @@ function checkExist([string]$file1,[string]$folder1){
         if ($isDir){ return 4;}
         return 0;
     }elseif($exlocal -and (-not $exremote)){
-        #remote‚ª‘¶İ‚µ‚È‚¢ not exist remote file
+        #remoteãŒå­˜åœ¨ã—ãªã„ not exist remote file
         $isDir=(Get-Item $localpath) -is [System.IO.DirectoryInfo]
         if ($isDir){ return 4;}
         return 1;
@@ -37,7 +37,7 @@ function checkExist([string]$file1,[string]$folder1){
         if ($isDir){ return 4;}
         return 2;
     }elseif((-not $exlocal) -and (-not $exremote)){
-        #—¼•û‘¶İ‚µ‚È‚¢ neither exist
+        #ä¸¡æ–¹å­˜åœ¨ã—ãªã„ neither exist
         return 3;
     }
 }
@@ -95,7 +95,7 @@ $logpath=Join-Path $lpath "log.txt";
 Start-Transcript $logpath;
 $jsonpath=Join-Path $lpath "config.json"
 $jsonContent = (Get-Content $jsonpath | ConvertFrom-Json)
-if(!$jsonContent.Backup){
+if($jsonContent.Backup -eq "false"){
     Write-Output "Backup setting : Disable"
     exit 0;
 }
@@ -105,7 +105,7 @@ New-Item $rpath -ItemType Directory -Force;
 $itemListLocal = Get-ChildItem $lpath -Name -file;
 $itemListRemote = Get-ChildItem $rpath -Name -file;
 $itemList=$itemListLocal+$itemListRemote;
-#d•¡íœ
+#é‡è¤‡å‰Šé™¤
 $itemList=$itemList | Sort-Object | Get-Unique;
 #ignore files
 $itemList=compare  $itemList $jsonContent.ignorelist  |  %  inputobject  |  sort
