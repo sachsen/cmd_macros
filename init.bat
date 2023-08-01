@@ -12,12 +12,12 @@ SET INPUT_STR=
 SET /P INPUT_STR=
  
 IF "%INPUT_STR%"=="" GOTO :yes
-set tf=true
+set tf=True
 set odpath=%INPUT_STR%
 GOTO :regist
 
 :no
-set tf=false
+set tf=False
 set odpath=""
 
 :regist
